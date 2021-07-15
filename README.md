@@ -22,3 +22,12 @@
 | \_CHPE_<br>\_CHPE_X86_ARM64_<br>i386<br>\_X86_ | | | defined | defined | | |
 | ARM64EC<br>\_ARM64EC_<br>AMD64<br>\_AMD64_ | | | | | | defined |
 
+## a
+
+``Project Properties -> Advanced -> Build Project as ARM64X``
+
+| | ARM64EC | ARM64X |
+| --- | --- | --- |
+| Machine | IMAGE_FILE_MACHINE_AMD64 | IMAGE_FILE_MACHINE_ARM64 |
+| b | ARM64EC<br>x64 | ARM64EC<br>x64<br>ARM64 |
+| c | x64 | x64<br>ARM64 |
