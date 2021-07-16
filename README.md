@@ -1,5 +1,24 @@
 # chpe_example
 
+## How to make CHPE
+1. [Download EWDK](https://docs.microsoft.com/windows-hardware/drivers/develop/using-the-enterprise-wdk). Launch it.  
+2. - (a) Download [CHPE.targets](CHPE.targets). put project dir.  
+     or
+   - (b) Modify the .sln/.vcxproj file yourself to allow ``$(Platform) == CHPE``.  
+     - \[MUST\] Remove 'odbccp32.lib' from ``Additional Dependencies``. Does not exist.
+     - \[MUST\] Set the ``Windows SDK Version`` to ``$(Version_Number)``. The EWDK environment has a separate Windows SDK.
+     - \[MAY\] Change ``Platform Toolset``.
+     - \[I Recommend\] Change ``Output Directory`` and ``Intermediate Directory``. By default it mixes with x86. 
+     - \[For DEBUG\] Disable Optimization. The default value is on.
+     - \[For DEBUG\] Change ``Debug Information Format`` to other than ``Program Database for Edit And Continue``. Control Flow Guard cannot be turned off.
+     - \[For DEBUG\] Disable ``Support Just My Code Debugging``. If do not turn it off, will get an internal compiler error.
+3. - (a) Run ``msbuild CHPE.targets /p:WindowsTargetPlatformVersion=%Version_Number% /p:Platform=CHPE /p:Configuration=Release /p:ProjectName=<your_project_name>``
+   - (b-1) Run ``msbuild <your_project> /p:Platform=CHPE /p:Configuration=Release``.  
+           or
+   - (b-2) 1. Run ``SetupVSEnv``.
+           2. Run ``start devenv``.
+           3. Build in VS.
+
 ## Predefined macros
 
 ### By compiler
@@ -29,5 +48,4 @@
 | | ARM64EC | ARM64X |
 | --- | --- | --- |
 | Machine | IMAGE_FILE_MACHINE_AMD64 | IMAGE_FILE_MACHINE_ARM64 |
-| b | ARM64EC<br>x64 | ARM64EC<br>x64<br>ARM64 |
-| c | x64 | x64<br>ARM64 |
+| Loadable Process | x64 | x64<br>ARM64 |
