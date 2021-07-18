@@ -9,8 +9,8 @@
      - \[MUST\] Set the ``Windows SDK Version`` to ``$(Version_Number)``. The EWDK environment has a separate Windows SDK.
      - \[MAY\] Change ``Platform Toolset``.
      - \[I Recommend\] Change ``Output Directory`` and ``Intermediate Directory``. By default it mixes with x86. 
-     - \[For DEBUG\] Disable Optimization. The default value is on.
-     - \[For DEBUG\] Change ``Debug Information Format`` to other than ``Program Database for Edit And Continue``. Control Flow Guard cannot be turned off.
+     - \[For DEBUG\] Disable ``Optimization``. The default value is on.
+     - \[For DEBUG\] Change ``Debug Information Format`` to other than ``Program Database for Edit And Continue``. ``Control Flow Guard`` cannot be turned off.
      - \[For DEBUG\] Disable ``Support Just My Code Debugging``. If do not turn it off, will get an internal compiler error.
 3. - (a) Run ``msbuild CHPE.targets /p:WindowsTargetPlatformVersion=%Version_Number% /p:Platform=CHPE /p:Configuration=Release /p:ProjectName=<your_project_name>``
    - (b-1) Run ``msbuild <your_project> /p:Platform=CHPE /p:Configuration=Release``.  
