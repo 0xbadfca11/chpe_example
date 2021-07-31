@@ -6,7 +6,7 @@
      or
    - (b) Modify the .sln/.vcxproj file yourself to allow ``$(Platform) == CHPE``.  
      - \[MUST\] Remove 'odbccp32.lib' from ``Additional Dependencies``. Does not exist.
-     - \[MUST\] Set the ``Windows SDK Version`` to ``$(Version_Number)``. The EWDK environment has a separate Windows SDK.
+     - \[MUST\] Set the ``Windows SDK Version`` to ``$(Version_Number)``. The EWDK environment has discrete Windows SDK.
      - \[MAY\] Change ``Platform Toolset``.
      - \[I Recommend\] Change ``Output Directory`` and ``Intermediate Directory``. By default it mixes with x86. 
      - \[For DEBUG\] Disable ``Optimization``. The default value is on.
@@ -15,9 +15,9 @@
 3. - (a) Run ``msbuild CHPE.targets /p:WindowsTargetPlatformVersion=%Version_Number% /p:Platform=CHPE /p:Configuration=Release /p:ProjectName=<your_project_name>``
    - (b-1) Run ``msbuild <your_project> /p:Platform=CHPE /p:Configuration=Release``.  
            or
-   - (b-2) 1. Run ``SetupVSEnv``.
-           2. Run ``start devenv``.
-           3. Build in VS.
+   - (b-2) 1. Run ``SetupVSEnv``.  
+           2. Run ``start devenv``.  
+           3. Build in VS.  
 
 ## Predefined macros
 
