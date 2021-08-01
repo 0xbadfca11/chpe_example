@@ -12,6 +12,7 @@
      - \[For DEBUG\] Disable ``Optimization``. The default value is on.
      - \[For DEBUG\] Change ``Debug Information Format`` to other than ``Program Database for Edit And Continue``. ``Control Flow Guard`` cannot be turned off.
      - \[For DEBUG\] Disable ``Support Just My Code Debugging``. If do not turn it off, will get an internal compiler error.
+     - \[For DLL\] Add ``/NOIMPLIB`` to linker's Additional Options. (required? ``LINK : fatal error LNK1376: /DLL and /WOWA64 are incompatible when producing an import library. Generate the import library separately.`` However does not occur in Configuration=Debug)
 3. - (a) Run ``msbuild CHPE.targets /p:WindowsTargetPlatformVersion=%Version_Number% /p:Platform=CHPE /p:Configuration=Release /p:ProjectName=<your_project_name>``
    - (b-1) Run ``msbuild <your_project> /p:Platform=CHPE /p:Configuration=Release``.  
            or
