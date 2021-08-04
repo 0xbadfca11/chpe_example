@@ -5,8 +5,8 @@
 2. - (a) Download [CHPE.targets](CHPE.targets). put project dir.  
      or
    - (b) Modify the .sln/.vcxproj file yourself to allow ``$(Platform) == CHPE``.  
-     - \[MUST\] Remove 'odbccp32.lib' from ``Additional Dependencies``. Does not exist.
-     - \[MUST\] Set the ``Windows SDK Version`` to ``$(Version_Number)``. The EWDK environment has discrete Windows SDK.
+     - \[MUST\] Remove 'odbccp32.lib' from ``Additional Dependencies``. It's not exist.
+     - \[MUST\] Set the ``Windows SDK Version`` to ``$(Version_Number)``. The EWDK environment use discrete Windows SDK.
      - \[MAY\] Change ``Platform Toolset``.
      - \[I Recommend\] Change ``Output Directory`` and ``Intermediate Directory``. By default it mixes with x86. 
      - \[For DEBUG\] Disable ``Optimization``. The default value is on.
