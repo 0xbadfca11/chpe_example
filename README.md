@@ -1,24 +1,20 @@
 # chpe_example
 
 ## How to make CHPE
-1. [Download EWDK](https://docs.microsoft.com/windows-hardware/drivers/develop/using-the-enterprise-wdk). Launch it.  
-2. - (a) Download [CHPE.targets](CHPE.targets). put project dir.  
-     or
-   - (b) Modify the .sln/.vcxproj file yourself to allow ``$(Platform) == CHPE``.  
-     - \[MUST\] Remove 'odbccp32.lib' from ``Additional Dependencies``. It's not exist.
-     - \[MUST\] Set the ``Windows SDK Version`` to ``$(Version_Number)``. The EWDK environment use discrete Windows SDK.
-     - \[MAY\] Change ``Platform Toolset``.
-     - \[I Recommend\] Change ``Output Directory`` and ``Intermediate Directory``. By default it mixes with x86. 
-     - \[For DEBUG\] Disable ``Optimization``. The default value is on.
-     - \[For DEBUG\] Change ``Debug Information Format`` to other than ``Program Database for Edit And Continue``. ``Control Flow Guard`` cannot be turned off.
-     - \[For DEBUG\] Disable ``Support Just My Code Debugging``. If do not turn it off, will get an internal compiler error.
-     - \[For DLL\] Disable ``Whole Program Optimization`` or Add ``/NOIMPLIB`` to linker's Additional Options. If do not, ``LINK : fatal error LNK1376: /DLL and /WOWA64 are incompatible when producing an import library. Generate the import library separately.``
-3. - (a) Run ``msbuild CHPE.targets /p:WindowsTargetPlatformVersion=%Version_Number% /p:Platform=CHPE /p:Configuration=Release /p:ProjectName=<your_project_name>``
-   - (b-1) Run ``msbuild <your_project> /p:Platform=CHPE /p:Configuration=Release``.  
-           or
-   - (b-2) 1. Run ``SetupVSEnv``.  
-           2. Run ``start devenv``.  
-           3. Build in VS.  
+1. Modify the .sln/.vcxproj file yourself by text editor to allow ``$(Platform) == CHPE``.  
+2. [Download EWDK](https://docs.microsoft.com/windows-hardware/drivers/download-the-wdk#enterprise-wdk-ewdk).  
+3. Open Visual Studio through ``SetupVSEnv`` in EWDK environment.  
+4. Open modified .sln or .vcxproj from SetupVSEnv-ed VS. (Don't open from explorer)  
+5. Make additional project settings.  
+   - \[MUST\] Remove ``odbccp32.lib`` from ``Linker`` -> ``Input`` -> ``Additional Dependencies``. It's not exist.
+   - \[MUST\] Set the ``General`` -> ``Windows SDK Version`` to ``$(Version_Number)``. The EWDK environment use discrete Windows SDK.
+     - [Can use the Condition element to share project in both EWDK and non-EWDK environments](chpe_exe/chpe_exe.vcxproj#L51).  
+   - \[MAY\] Change ``General`` -> ``Platform Toolset``.
+   - \[I Recommend\] Change ``General`` -> ``Output Directory`` and ``Intermediate Directory``. By default it mixes with x86.
+   - \[For DEBUG\] Disable ``C/C++`` -> ``Optimization`` -> ``Optimization``. The default value is on.
+   - \[For DEBUG\] Change ``C/C++`` -> ``General`` -> ``Debug Information Format`` to other than ``Program Database for Edit And Continue``. ``Control Flow Guard`` cannot be turned off.
+   - \[For DEBUG\] Disable ``C/C++`` -> ``General`` -> ``Support Just My Code Debugging``. If do not turn it off, will get an internal compiler error.
+   - \[For DLL\] Disable ``Advanced`` -> ``Whole Program Optimization`` or Add ``/NOIMPLIB`` to ``Linker`` -> ``Command Line`` ->  ``Additional Options``. If do not, will get ``LINK : fatal error LNK1376: /DLL and /WOWA64 are incompatible when producing an import library. Generate the import library separately.``
 
 ## Predefined macros
 
@@ -43,10 +39,4 @@
 | ARM64EC<br>\_ARM64EC_<br>AMD64<br>\_AMD64_ | | | | | | defined |
 
 ## a
-
-``Project Properties -> Advanced -> Build Project as ARM64X``
-
-| | ARM64EC | ARM64X |
-| --- | --- | --- |
-| Machine | IMAGE_FILE_MACHINE_AMD64 | IMAGE_FILE_MACHINE_ARM64 |
-| Loadable Process | x64 | x64<br>ARM64 |
+CHPE is compiled twice. As x86, and as ARM64. X86 is used for parts that could not be compiled as ARM64 on a function-by-function (such as containg inline assembler or intrinsic function).
